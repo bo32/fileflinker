@@ -3,3 +3,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+
+tests/unit_tests/resources/tmp/**
+
+*.pdf

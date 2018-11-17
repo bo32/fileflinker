@@ -1,6 +1,6 @@
 import file_helper
 import os
-import io
+import config
 
 """Splits a PDF into JPG images (one per page).
 The JPG images are stored in a temp folder in ~/.fileflinker.
@@ -15,7 +15,7 @@ class PDFSplitter:
     def __init__(self):
         pass
 
-    def to_images(self, format, filepath):
+    def to_images(self, format, filepath, destination = config.DEFAULT_TEMP_FOLDER):
         pdf = open(filepath, 'rb').read()
         i = 0
         startmark = b'\xff\xd8'
@@ -25,7 +25,6 @@ class PDFSplitter:
         njpg = 0
 
         filename = file_helper.get_filename_without_extension(filepath)
-        print(filename)
         while True:
             istream = pdf.find(b'stream', i)
             if istream < 0:
@@ -48,10 +47,9 @@ class PDFSplitter:
             iend += endfix
             jpg = pdf[istart:iend]
 
-            tmp_folder = os.path.join(file_helper.get_home_folder(), '.fileflinker/tmp')
-            if not file_helper.does_directory_exist(tmp_folder):
-                file_helper.create_directory(tmp_folder)
-            jpgfile = open(os.path.join(tmp_folder, '%s%d.%s' % (filename, njpg, format)), 'wb')
+            if not file_helper.does_directory_exist(destination):
+                file_helper.create_directory(destination)
+            jpgfile = open(os.path.join(destination, '%s%d.%s' % (filename, njpg, format)), 'wb')
             jpgfile.write(jpg)
             jpgfile.close()
             
