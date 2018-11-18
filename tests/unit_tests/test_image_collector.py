@@ -7,9 +7,9 @@ from image_collector import ImageCollector
 class TestImageCollector(unittest.TestCase):
 
     def setUp(self):
-        self.tmp_folder = os.path.join('tests','unit_tests','resources', 'tmp')
-        self.test_destination = os.path.join(self.tmp_folder,'test.cbz')
         self.resources_folder = os.path.join('tests','unit_tests','resources') 
+        self.tmp_folder = os.path.join(self.resources_folder, 'tmp')
+        self.test_destination = os.path.join(self.tmp_folder,'test.cbz')
         file_helper.empty_folder(self.tmp_folder)
 
         self.image_collector = ImageCollector()

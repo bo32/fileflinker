@@ -40,4 +40,7 @@ def create_file(filepath):
     
 
 def copy_file(sources, destination):
+    path = get_path(destination)
+    if not does_directory_exist(path):
+        create_directory(path)
     shutil.copy2(sources, destination)

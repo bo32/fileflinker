@@ -10,7 +10,8 @@ import file_helper
 class TestFileHelper(unittest.TestCase):
 
     def setUp(self):
-        self.test_path = os.path.join('tests', 'resources', 'tmp')
+        self.resources_folder = os.path.join('tests', 'unit_tests', 'resources')
+        self.test_path = os.path.join(self.resources_folder, 'tmp')
         file_helper.delete_folder(self.test_path)
 
     def test_get_home_folder(self):
@@ -31,11 +32,11 @@ class TestFileHelper(unittest.TestCase):
         assert(file_helper.does_directory_exist(self.test_path))
     
     def test_file_exists(self):
-        path = os.path.join('tests','unit_tests','resources','1.jpg')
+        path = os.path.join(self.resources_folder,'1.jpg')
         assert(file_helper.does_file_exist(path))
     
     def test_file_does_not_exist(self):
-        path = os.path.join('tests','unit_tests','resources','does_not_exist.pdf')
+        path = os.path.join(self.resources_folder,'does_not_exist.pdf')
         assert(not file_helper.does_file_exist(path))
 
     def test_get_filename_without_extension(self):
@@ -50,7 +51,7 @@ class TestFileHelper(unittest.TestCase):
         assert(len(os.listdir(self.test_path)) == 1)
 
     def test_get_path(self):
-        assert(file_helper.get_path(os.path.join('tests','unit_tests','resources','1.jpg')) == os.path.join('tests','unit_tests','resources'))
+        assert(file_helper.get_path(os.path.join(self.resources_folder,'1.jpg')) == self.resources_folder)
 
     def test_empty_folder(self):
         file_helper.create_file(os.path.join(self.test_path, 'to_be_removed.txt'))
@@ -60,6 +61,8 @@ class TestFileHelper(unittest.TestCase):
     def test_copy_file(self):
         src_folder = os.path.join('tests','unit_tests','resources')
         tgt_folder = os.path.join(src_folder,'tmp')
+        print(os.path.join(src_folder,'2.png'))
+        print(os.path.join(tgt_folder,'2.png'))
         file_helper.copy_file(
             os.path.join(src_folder,'2.png'),
             os.path.join(tgt_folder,'2.png'))
