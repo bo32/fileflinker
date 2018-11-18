@@ -30,7 +30,8 @@ class PDFSplitter:
             if istream < 0:
                 if njpg == 0:
                     raise Exception("The PDF couldn't be split.")
-                print('Successfully split the PDF: %d resulting files.' % njpg)
+                print('Successfully split the PDF %s' % filepath)
+                print('%d resulting files stored in %s' % (njpg, destination))
                 break
             istart = pdf.find(startmark, istream, istream+20)
             if istart < 0:

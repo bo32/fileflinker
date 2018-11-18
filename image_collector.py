@@ -14,6 +14,7 @@ class ImageCollector:
             print('Processing %s' % f)
             zip.write(f)
         zip.close()
+        print('Archive %s successfully created' % destination)
     
     def collect_files_from(self, folder=config.DEFAULT_TEMP_FOLDER, destination=config.DEFAULT_CBZ_DESTINATION):
         self.collect_files_as(*(os.path.join(folder, f) for f in os.listdir(folder)), destination=destination)

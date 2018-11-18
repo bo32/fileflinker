@@ -11,9 +11,10 @@ parser.add_argument('--input', type=str)
 # parser.add_argument('--output', type=str)
 
 args = parser.parse_args()
-if args.action == 'pdf-to-cbz':
+if args.action.startswith('pdf-to'):
     pdf_splitter = PDFSplitter()
     pdf_splitter.to_images('jpg', args.input)
 
-    image_collector = ImageCollector()
-    image_collector.collect_files_from()
+    if args.action == 'pdf-to-cbz':
+        image_collector = ImageCollector()
+        image_collector.collect_files_from()
