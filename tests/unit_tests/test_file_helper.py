@@ -3,7 +3,6 @@ from sys import platform
 import unittest
 import getpass
 from pathlib import Path
-import shutil
 
 import file_helper
 
@@ -11,9 +10,8 @@ import file_helper
 class TestFileHelper(unittest.TestCase):
 
     def setUp(self):
-        self.test_path = './test/test2'
-        if (Path(self.test_path).is_dir()):
-            shutil.rmtree(self.test_path)
+        self.test_path = os.path.join('tests', 'resources', 'tmp')
+        file_helper.delete_folder(self.test_path)
 
     def test_get_home_folder(self):
         candidate = file_helper.get_home_folder()
@@ -46,3 +44,23 @@ class TestFileHelper(unittest.TestCase):
     def test_get_filename_without_extension_with_path(self):
         path = os.path.join('test','test2','myfile.pdf')
         assert('myfile' == file_helper.get_filename_without_extension(path))
+    
+    def test_create_file(self):
+        file_helper.create_file(os.path.join(self.test_path, 'newly_created.txt'))
+        assert(len(os.listdir(self.test_path)) == 1)
+
+    def test_get_path(self):
+        assert(file_helper.get_path(os.path.join('tests','unit_tests','resources','1.jpg')) == os.path.join('tests','unit_tests','resources'))
+
+    def test_empty_folder(self):
+        file_helper.create_file(os.path.join(self.test_path, 'to_be_removed.txt'))
+        file_helper.empty_folder(self.test_path)
+        assert(len(os.listdir(self.test_path)) == 0)
+
+    def test_copy_file(self):
+        src_folder = os.path.join('tests','unit_tests','resources')
+        tgt_folder = os.path.join(src_folder,'tmp')
+        file_helper.copy_file(
+            os.path.join(src_folder,'2.png'),
+            os.path.join(tgt_folder,'2.png'))
+        assert(len(os.listdir(tgt_folder)) == 1)

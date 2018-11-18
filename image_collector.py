@@ -10,7 +10,11 @@ class ImageCollector:
 
     def collect_files_as(self, *files, destination=config.DEFAULT_CBZ_DESTINATION):
         zip = zipfile.ZipFile(destination, 'w', zipfile.ZIP_STORED)
-        for file in files:
-            zip.write(file)
+        for f in files:
+            print('Processing %s' % f)
+            zip.write(f)
         zip.close()
+    
+    def collect_files_from(self, folder=config.DEFAULT_TEMP_FOLDER, destination=config.DEFAULT_CBZ_DESTINATION):
+        self.collect_files_as(*(os.path.join(folder, f) for f in os.listdir(folder)), destination=destination)
     
