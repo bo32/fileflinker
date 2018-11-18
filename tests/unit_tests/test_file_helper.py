@@ -61,8 +61,6 @@ class TestFileHelper(unittest.TestCase):
     def test_copy_file(self):
         src_folder = os.path.join('tests','unit_tests','resources')
         tgt_folder = os.path.join(src_folder,'tmp')
-        print(os.path.join(src_folder,'2.png'))
-        print(os.path.join(tgt_folder,'2.png'))
         file_helper.copy_file(
             os.path.join(src_folder,'2.png'),
             os.path.join(tgt_folder,'2.png'))

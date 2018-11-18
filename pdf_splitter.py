@@ -1,5 +1,7 @@
 import file_helper
 import os
+import logging
+
 import config
 
 """Splits a PDF into JPG images (one per page).
@@ -12,8 +14,9 @@ for the implementation.
 :raises Exception: if the end of a JPG image was not found.
 """
 class PDFSplitter:
+
     def __init__(self):
-        pass
+        self.logger = logging.getLogger(PDFSplitter.__name__)
 
     def to_images(self, format, filepath, destination = config.DEFAULT_TEMP_FOLDER):
         pdf = open(filepath, 'rb').read()
@@ -30,8 +33,8 @@ class PDFSplitter:
             if istream < 0:
                 if njpg == 0:
                     raise Exception("The PDF couldn't be split.")
-                print('Successfully split the PDF %s' % filepath)
-                print('%d resulting files stored in %s' % (njpg, destination))
+                self.logger.info('Successfully split the PDF %s' % filepath)
+                self.logger.info('%d resulting files stored in %s' % (njpg, destination))
                 break
             istart = pdf.find(startmark, istream, istream+20)
             if istart < 0:

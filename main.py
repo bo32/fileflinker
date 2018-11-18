@@ -2,6 +2,9 @@ import argparse
 from pdf_splitter import PDFSplitter
 from image_collector import ImageCollector
 
+import logging
+logging.basicConfig(level=logging.INFO)
+
 parser = argparse.ArgumentParser(description='Manipulate and convert e-book files.')
 parser.add_argument('action', 
                     type=str,
