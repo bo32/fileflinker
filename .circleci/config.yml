@@ -33,6 +33,7 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
+            pip install coverage
 
       - save_cache:
           paths:
@@ -44,11 +45,13 @@ jobs:
       # other common Python testing frameworks include pytest and nose
       # https://pytest.org
       # https://nose.readthedocs.io
+      
+      # Previous command: python -m unittest discover
       - run:
           name: run tests
           command: |
             . venv/bin/activate
-            python -m unittest discover
+            coverage run --source=. -m unittest discover
 
       - store_artifacts:
           path: test-reports
